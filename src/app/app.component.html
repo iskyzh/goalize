@@ -1,0 +1,34 @@
+<header>
+  <nav class="navbar navbar-toggleable-md goalize-navbar" [ngClass]="'goal-navbar-' + current_color">
+    <span class="navbar-brand">Goalize</span>
+    <ul class="navbar-nav mr-auto">
+    </ul>
+    <span class="navbar-text">
+      <span *ngIf="db_status == 0"><i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i> 同步数据中……</span>
+      <span *ngIf="db_status == 1"><i class="fa fa-check" aria-hidden="true"></i> 已同步最新数据</span>
+      <span *ngIf="db_status == 2"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> 与服务器失去连接</span>
+    </span>
+  </nav>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+  <template ngbModalContainer></template>
+</main>
+
+<footer class="footer-main">
+  <div class="container">
+    <a href="https://github.com/SkyZH/goalize">Goalize</a> is licensed under MIT. Credit <a href="https://github.com/SkyZH">SkyZH (迟遲的星星球) on GitHub.</a>
+  </div>
+</footer>
+
+<template #authContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">登陆</h4>
+  </div>
+  <div class="modal-body">
+    <p>您需要登陆后才能使用 Goalize。</p>
+    <a class="btn btn-primary" href="javascript:;" (click)="loginViaGoogle()"><i class="fa fa-google" aria-hidden="true"></i></a>
+    <p class="text-muted"><small>登陆成功后，请返回这里并刷新。</small></p>
+  </div>
+</template>

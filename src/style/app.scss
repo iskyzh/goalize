@@ -1,0 +1,8 @@
+// styles in src/style directory are applied to the whole page
+
+@import "footer";
+@import "colors";
+
+body {
+  font-family: "Helvetica Neue", "Helvetica", "Arial", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
