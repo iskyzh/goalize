@@ -34,7 +34,6 @@
     "@angular/platform-browser-dynamic": "2.4.7",
     "@angular/router": "3.4.7",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.18",
-    "angular2-busy": "^1.0.2",
     "angular2-moment": "^1.1.0",
     "angularfire2": "^2.0.0-beta.8",
     "bootstrap": "^4.0.0-alpha.6",

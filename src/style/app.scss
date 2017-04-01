@@ -6,3 +6,11 @@
 body {
   font-family: "Helvetica Neue", "Helvetica", "Arial", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 }
+
+.goalize-navbar-indicator {
+  transition: opacity 0.5s;
+  opacity: 0;
+  &.show {
+    opacity: 1;
+  }
+}

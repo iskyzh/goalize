@@ -10,8 +10,6 @@ import { AboutComponent } from './about/about.component';
 import { ApiService } from './shared';
 import { routing } from './app.routing';
 import { AngularFireModule } from 'angularfire2';
-import { BusyModule } from 'angular2-busy';
-
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 
 @NgModule({
@@ -22,8 +20,7 @@ import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
     MomentModule,
     NgbModule.forRoot(),
     routing,
-    AngularFireModule.initializeApp(require('../../config/firebase.js')),
-    BusyModule
+    AngularFireModule.initializeApp(require('../../config/firebase.js'))
   ],
   declarations: [
     AppComponent,

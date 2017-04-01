@@ -20,4 +20,3 @@ import * as moment from 'moment';
 moment.locale('zh_CN')
 import 'angular2-moment';
 import 'angularfire2';
-import 'angular2-busy';

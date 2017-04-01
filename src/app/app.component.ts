@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angula
 import { Observable } from 'rxjs';
 import { ApiService } from './shared';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
+import { AngularFire, AuthProviders, AuthMethods, FirebaseObjectObservable } from 'angularfire2';
 
 import '../style/app.scss';
 
@@ -15,9 +15,11 @@ export class AppComponent implements AfterViewInit {
   @ViewChild('authContent') private authModal: ElementRef;
   
   private current_color: string = "grey";
+  private connected$: FirebaseObjectObservable<any>;
 
   constructor(private api: ApiService, private modalService: NgbModal, private af: AngularFire) {
     api.NavbarColor$.subscribe(color => this.current_color = color)
+    this.connected$ = af.database.object('/.info/connected');
   }
 
   ngAfterViewInit() {
