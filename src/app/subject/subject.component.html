@@ -20,7 +20,7 @@
                 最后编辑于 {{ examination.timeUpdated | amTimeAgo }}
               </small>
             </h6>
-            <div><span class="badge badge-pill badge-default" *ngFor="let tag of examination.tags">{{ tag.display }}</span></div>
+            <div><span class="badge badge-pill badge-default mx-1" *ngFor="let tag of examination.tags">{{ tag.display }}</span></div>
           </div>
         </div>
       </div>
@@ -40,15 +40,22 @@
     <h4 class="modal-title">添加考试</h4>
   </div>
   <div class="modal-body">
-    <form>
+    <form (ngSubmit)="c('ok')" #examinationForm="ngForm">
       <div class="form-group">
-        <input class="form-control" placeholder="名称" name="name" [(ngModel)]="__examination.name" autofocus>
+        <input class="form-control" placeholder="名称" name="name" [(ngModel)]="__examination.name" autofocus required>
+      </div>
+      <div class="form-group">
         <tag-input class="goalize-input-tag" [(ngModel)]="__examination.tags" name="tags" theme="minimal" [placeholder]="'接着添加标签'" [secondaryPlaceholder]="'标签'">
         </tag-input>
-        <input class="form-control" placeholder="日期" name="date" [(ngModel)]="__examination.date" autofocus>
       </div>
+      <div class="form-group">
+        <div class="input-group goalize-input-datepicker">
+          <input class="form-control" type="date" placeholder="日期" name="date" [(ngModel)]="__examination.date" required>
+          <span class="input-group-addon" *ngIf="__examination.date">{{ __examination.date | amTimeAgo }}</span>
+        </div>
+      </div>
+      <button class="btn btn-primary text-xs-right" (click)="c('ok')"  [disabled]="!examinationForm.form.valid">确定</button>
+      <button class="btn btn-secondary text-xs-right" (click)="c('cancel')">取消</button>
     </form>
-    <button class="btn btn-primary text-xs-right" (click)="c('ok')">确定</button>
-    <button class="btn btn-secondary text-xs-right" (click)="c('cancel')">取消</button>
   </div>
 </template>

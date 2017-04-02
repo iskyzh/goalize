@@ -38,18 +38,18 @@
     <h4 class="modal-title">添加学科</h4>
   </div>
   <div class="modal-body">
-    <form>
+    <form (ngSubmit)="c('ok')" #subjectForm="ngForm">
       <div class="form-group">
-        <input class="form-control" placeholder="名称" name="name" [(ngModel)]="__subject.name" autofocus>
+        <input class="form-control" placeholder="名称" name="name" [(ngModel)]="__subject.name" autofocus required>
       </div>
       <div class="form-group">
         <label for="goalSubjectColor">颜色</label>
-        <select class="form-control" id="goalSubjectColor" name="color" [(ngModel)]="__subject.color">
+        <select class="form-control" id="goalSubjectColor" name="color" [(ngModel)]="__subject.color" required>
           <option *ngFor="let color of colors">{{ color }}</option>
         </select>
       </div>
+      <button type="submit" class="btn btn-primary text-xs-right" (click)="c('ok')" [disabled]="!subjectForm.form.valid">确定</button>
+      <button class="btn btn-secondary text-xs-right" (click)="c('cancel')">取消</button>
     </form>
-    <button class="btn btn-primary text-xs-right" (click)="c('ok')">确定</button>
-    <button class="btn btn-secondary text-xs-right" (click)="c('cancel')">取消</button>
   </div>
 </template>
