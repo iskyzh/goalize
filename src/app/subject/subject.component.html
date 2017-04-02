@@ -7,7 +7,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6 col-lg-3 mb-2" *ngFor="let examination of examinations$ | async" [routerLink]="['/subject/', subjectID, 'examination', examination.$key]">
+    <div class="col-md-6 col-lg-3 mb-2" *ngFor="let examination of examinations$ | async" [routerLink]="['/subject', (subject | async).$key, 'examination', examination.$key]">
       <div class="card goal-examination-card" [ngStyle]="{'background-color': examination.color}">
         <div class="card-block d-flex align-items-center justify-content-center">
           <div class="card-block text-center">

@@ -1,0 +1,15 @@
+<div class="container mt-3">
+  <div class="card">
+    <div class="card-block goal-problem-card-header" *ngIf="examination | async">
+      <h4 class="card-title">{{ (examination | async).name }}</h4>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item goal-problem-card d-flex align-items-center justify-content-center" *ngIf="!(problems | async)">
+        <span class="card-title text-muted"><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i></span>
+      </li>
+      <li class="list-group-item goal-problem-card d-flex align-items-center justify-content-center" *ngIf="problems | async">
+        <span class="card-title text-muted"><i class="fa fa-plus fa-3x" aria-hidden="true"></i></span>
+      </li>
+    </ul>
+  </div>
+</div>

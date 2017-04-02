@@ -8,6 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { SubjectComponent } from './subject/subject.component';
+import { ExaminationComponent } from './examination/examination.component';
 import { ApiService } from './shared';
 import { routing } from './app.routing';
 import { AngularFireModule } from 'angularfire2';
@@ -29,7 +30,8 @@ import { TagInputModule } from 'ng2-tag-input';
   declarations: [
     AppComponent,
     HomeComponent,
-    SubjectComponent
+    SubjectComponent,
+    ExaminationComponent
   ],
   providers: [
     ApiService

@@ -93,6 +93,11 @@
   color: $md-light-text-primary;
 }
 
+.goal-navbar-white {
+  background-color: $md-white;
+  color: $md-dark-text-primary;  
+}
+
 .goalize-navbar {
   transition: background-color 0.3s ease-out, color 0.3s ease-out;
 }
