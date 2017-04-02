@@ -14,7 +14,7 @@ import { routing } from './app.routing';
 import { AngularFireModule } from 'angularfire2';
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 import { TagInputModule } from 'ng2-tag-input';
-
+import { FIREBASE_CONFIG } from './config/firebase';
 @NgModule({
   imports: [
     BrowserModule,
@@ -22,7 +22,7 @@ import { TagInputModule } from 'ng2-tag-input';
     FormsModule,
     BrowserAnimationsModule,
     routing,
-    AngularFireModule.initializeApp(require('../../config/firebase.js')),
+    AngularFireModule.initializeApp(FIREBASE_CONFIG),
     MomentModule,
     NgbModule.forRoot(),
     TagInputModule

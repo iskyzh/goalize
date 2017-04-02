@@ -21,8 +21,8 @@ export class SubjectComponent implements OnInit, OnDestroy {
   private subjectID: string;
 
   constructor(private route: ActivatedRoute, private api: ApiService, private db: DBService, private af: AngularFire, private modalService: NgbModal) {
-    this.subject = route.params.switchMap((params: Params) => af.database.object(`/subjects/${params['id']}`));
-    this.examinations = route.params.switchMap((params: Params) => af.database.list(`/examinations/${params['id']}`));
+    this.subject = route.params.switchMap((params: Params) => af.database.object(api.f(`/subjects/${params['id']}`)));
+    this.examinations = route.params.switchMap((params: Params) => af.database.list(api.f(`/examinations/${params['id']}`)));
     this.examinations$ = this.examinations.map(e => _(e).sortBy('date').map((e, i) => _.merge(e, { color: MATERIAL_COLORS_DATA[this.subjectColor][EXAMINATION_COLOR(i)] })).reverse().value());
   }
 
@@ -40,7 +40,7 @@ export class SubjectComponent implements OnInit, OnDestroy {
   }
 
   addExamination(examination) {
-    this.af.database.list(`/examinations/${this.subjectID}`).push(examination);
+    this.af.database.list(this.api.f(`/examinations/${this.subjectID}`)).push(examination);
     this.db.postChangeExamination(this.subject);
   }
 

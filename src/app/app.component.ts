@@ -27,6 +27,10 @@ export class AppComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.af.auth.subscribe(auth => {
       if (!auth) this.requestAuth();
+      if (localStorage.getItem('auth') != auth.uid) {
+        localStorage.setItem('auth', auth.uid);
+        location.reload();
+      }
     })
   }
 
