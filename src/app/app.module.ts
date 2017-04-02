@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { SubjectComponent } from './subject/subject.component';
 import { ExaminationComponent } from './examination/examination.component';
-import { ApiService } from './shared';
+import { ApiService, DBService } from './shared';
 import { routing } from './app.routing';
 import { AngularFireModule } from 'angularfire2';
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
@@ -34,7 +34,8 @@ import { TagInputModule } from 'ng2-tag-input';
     ExaminationComponent
   ],
   providers: [
-    ApiService
+    ApiService,
+    DBService
   ],
   bootstrap: [AppComponent]
 })

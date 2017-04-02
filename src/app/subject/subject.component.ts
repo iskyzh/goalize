@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
-import { ApiService } from '../shared';
+import { ApiService, DBService } from '../shared';
 import * as _ from 'lodash';
 import { Subject, Examination, MATERIAL_COLORS_DATA, EXAMINATION_COLOR } from '../models';
 
@@ -20,7 +20,7 @@ export class SubjectComponent implements OnInit, OnDestroy {
   private __examination: Examination;
   private subjectID: string;
 
-  constructor(private route: ActivatedRoute, private api: ApiService, private af: AngularFire, private modalService: NgbModal) {
+  constructor(private route: ActivatedRoute, private api: ApiService, private db: DBService, private af: AngularFire, private modalService: NgbModal) {
     this.subject = route.params.switchMap((params: Params) => af.database.object(`/subjects/${params['id']}`));
     this.examinations = route.params.switchMap((params: Params) => af.database.list(`/examinations/${params['id']}`));
     this.examinations$ = this.examinations.map(e => _(e).sortBy('date').map((e, i) => _.merge(e, { color: MATERIAL_COLORS_DATA[this.subjectColor][EXAMINATION_COLOR(i)] })).reverse().value());
@@ -41,6 +41,7 @@ export class SubjectComponent implements OnInit, OnDestroy {
 
   addExamination(examination) {
     this.af.database.list(`/examinations/${this.subjectID}`).push(examination);
+    this.db.postChangeExamination(this.subject);
   }
 
   open(content) {

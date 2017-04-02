@@ -14,7 +14,7 @@ import '../style/app.scss';
 export class AppComponent implements AfterViewInit {
   @ViewChild('authContent') private authModal: ElementRef;
   
-  private current_color: string = "white";
+  private current_color: string = "grey";
   private current_title: string[] = ["Loading..."];
   private connected$: FirebaseObjectObservable<any>;
 

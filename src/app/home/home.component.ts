@@ -18,7 +18,7 @@ export class HomeComponent {
 
   constructor(private api: ApiService, private modalService: NgbModal, private af: AngularFire) {
     this.subjects = af.database.list('/subjects');
-    api.NavbarColor$.next('grey');
+    api.NavbarColor$.next('white');
     api.NavbarTitle$.next('Goalize');
   }
 

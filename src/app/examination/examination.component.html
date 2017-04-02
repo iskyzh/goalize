@@ -1,11 +1,42 @@
 <div class="container mt-3">
   <div class="card">
     <div class="card-block goal-problem-card-header" *ngIf="examination | async">
-      <h4 class="card-title">{{ (examination | async).name }}</h4>
+      <div class="row">
+        <div class="col">
+          <h1 class="card-title">{{ (examination | async).name }} <small class="text-muted">{{ (subject | async).name }}</small></h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <dl class="row">
+            <dt class="col-3">举行时间</dt>
+            <dd class="col-9">{{ (examination | async).date | amDateFormat:'LL' }}</dd>
+
+            <dt class="col-3">最后编辑</dt>
+            <dd class="col-9">{{ (examination | async).timeUpdated | amCalendar }}</dd>
+
+            <dt class="col-3">创建时间</dt>
+            <dd class="col-9">{{ (examination | async).timeCreated | amCalendar }}</dd>
+          </dl>
+        </div>
+      </div>
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item goal-problem-card d-flex align-items-center justify-content-center" *ngIf="!(problems | async)">
         <span class="card-title text-muted"><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i></span>
+      </li>
+      <li class="list-group-item goal-problem-card d-flex" *ngIf="problems | async">
+        <div class="col-1 d-flex flex-column justify-content-center">
+          <h1 class="display-2 text-center my-0"><samp>1</samp></h1>
+          <div class="progress">
+            <div class="progress-bar bg-info" role="progressbar" style="width: 50%;">1/2</div>
+          </div>
+        </div>
+        <div class="col">
+          <h3>选择题</h3>
+          <h3>微生物</h3>
+          <h3>看错题目</h3>
+        </div>
       </li>
       <li class="list-group-item goal-problem-card d-flex align-items-center justify-content-center" *ngIf="problems | async">
         <span class="card-title text-muted"><i class="fa fa-plus fa-3x" aria-hidden="true"></i></span>
