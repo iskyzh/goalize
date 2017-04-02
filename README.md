@@ -10,7 +10,7 @@ MIT
 
 Create `/config/firebase.js` with:
 
-```json
+```javascript
 module.exports = {
   apiKey: "???",
   authDomain: "???",
@@ -22,3 +22,7 @@ module.exports = {
 ```
 
 Create Firebase Instance on Google Firebase Console and enable Google Login. Then you can have fun!
+
+## Screenshots
+
+![image](https://cloud.githubusercontent.com/assets/4198311/24579267/a0317cce-1724-11e7-85d2-907a4109de2a.png)
