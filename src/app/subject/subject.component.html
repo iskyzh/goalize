@@ -1,0 +1,54 @@
+<div class="container-fluid mt-3">
+  <div class="row">
+    <div class="col-md-6 col-lg-3 mb-2" *ngIf="!(examinations$ | async)">
+      <div class="card goal-examination-card">
+        <div class="card-block d-flex align-items-center justify-content-center">
+          <h3 class="card-title text-muted"><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i></h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-2" *ngFor="let examination of examinations$ | async" [routerLink]="['/subject/', subjectID, 'examination', examination.$key]">
+      <div class="card goal-examination-card" [ngStyle]="{'background-color': examination.color}">
+        <div class="card-block d-flex align-items-center justify-content-center">
+          <div class="card-block text-center">
+            <h3 class="goal-examination-title">{{ examination.name }}</h3>
+            <h6>
+              <small>
+                <br>
+                于 {{ examination.date | amDateFormat:'LL' }} 举行
+                <br>
+                最后编辑于 {{ examination.timeUpdated | amTimeAgo }}
+              </small>
+            </h6>
+            <div><span class="badge badge-pill badge-default" *ngFor="let tag of examination.tags">{{ tag.display }}</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-2" (click)="open(examinationContent)" *ngIf="examinations$ | async">
+      <div class="card goal-examination-card">
+        <div class="card-block d-flex align-items-center justify-content-center">
+          <h3 class="card-title text-xs-center text-muted"><i class="fa fa-plus" aria-hidden="true"></i></h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<template #examinationContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">添加考试</h4>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <input class="form-control" placeholder="名称" name="name" [(ngModel)]="__examination.name" autofocus>
+        <tag-input class="goalize-input-tag" [(ngModel)]="__examination.tags" name="tags" theme="minimal" [placeholder]="'接着添加标签'" [secondaryPlaceholder]="'标签'">
+        </tag-input>
+        <input class="form-control" placeholder="日期" name="date" [(ngModel)]="__examination.date" autofocus>
+      </div>
+    </form>
+    <button class="btn btn-primary text-xs-right" (click)="c('ok')">确定</button>
+    <button class="btn btn-secondary text-xs-right" (click)="c('cancel')">取消</button>
+  </div>
+</template>

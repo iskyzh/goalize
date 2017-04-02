@@ -11,7 +11,7 @@
       <div class="card goal-subject-card" [ngClass]="'goal-subject-' + subject.color">
         <div class="card-block d-flex align-items-center justify-content-center">
           <div class="card-block text-center">
-            <h3>{{ subject.name }}</h3>
+            <h3 class="goalize-subject-card-title">{{ subject.name }}</h3>
             <h6>
               <small>
                 创建于 {{ subject.timeCreated | amTimeAgo }}
@@ -23,10 +23,10 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6 col-lg-3 mb-2" (click)="open(subjectContent)">
+    <div class="col-md-6 col-lg-3 mb-2" (click)="open(subjectContent)" *ngIf="subjects | async">
       <div class="card goal-subject-card">
         <div class="card-block d-flex align-items-center justify-content-center">
-          <h3 class="card-title text-xs-center text-muted">添加</h3>
+          <h3 class="card-title text-xs-center text-muted"><i class="fa fa-plus" aria-hidden="true"></i></h3>
         </div>
       </div>
     </div>

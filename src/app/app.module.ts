@@ -1,31 +1,35 @@
 import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { MomentModule } from 'angular2-moment';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
+import { SubjectComponent } from './subject/subject.component';
 import { ApiService } from './shared';
 import { routing } from './app.routing';
 import { AngularFireModule } from 'angularfire2';
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
+import { TagInputModule } from 'ng2-tag-input';
 
 @NgModule({
   imports: [
     BrowserModule,
     HttpModule,
     FormsModule,
+    BrowserAnimationsModule,
+    routing,
+    AngularFireModule.initializeApp(require('../../config/firebase.js')),
     MomentModule,
     NgbModule.forRoot(),
-    routing,
-    AngularFireModule.initializeApp(require('../../config/firebase.js'))
+    TagInputModule
   ],
   declarations: [
     AppComponent,
     HomeComponent,
-    AboutComponent
+    SubjectComponent
   ],
   providers: [
     ApiService

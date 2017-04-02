@@ -4,7 +4,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { ApiService } from '../shared';
 import * as _ from 'lodash';
-import { Subject } from '../models';
+import { Subject, MATERIAL_COLORS } from '../models';
 
 @Component({
   selector: 'my-home',
@@ -13,12 +13,13 @@ import { Subject } from '../models';
 })
 export class HomeComponent {
   private subjects: FirebaseListObservable<any>;
-  private colors = ['red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue', 'light-blue', 'cyan', 'teal', 'green', 'light-green', 'lime', 'yellow', 'amber', 'orange', 'deep-orange', 'brown', 'grey', 'blue-grey']
+  private colors = MATERIAL_COLORS;
   private __subject: Subject = new Subject;
 
-  constructor(private api: ApiService, private modalService: NgbModal, af: AngularFire) {
+  constructor(private api: ApiService, private modalService: NgbModal, private af: AngularFire) {
     this.subjects = af.database.list('/subjects');
     api.NavbarColor$.next('grey');
+    api.NavbarTitle$.next('Goalize');
   }
 
   addSubject(data) {

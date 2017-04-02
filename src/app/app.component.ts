@@ -15,10 +15,12 @@ export class AppComponent implements AfterViewInit {
   @ViewChild('authContent') private authModal: ElementRef;
   
   private current_color: string = "grey";
+  private current_title: string[] = ["Loading..."];
   private connected$: FirebaseObjectObservable<any>;
 
   constructor(private api: ApiService, private modalService: NgbModal, private af: AngularFire) {
-    api.NavbarColor$.subscribe(color => this.current_color = color)
+    api.NavbarColor$.subscribe(color => this.current_color = color);
+    api.NavbarTitle$.subscribe(title => this.current_title = title.split('>'));
     this.connected$ = af.database.object('/.info/connected');
   }
 
