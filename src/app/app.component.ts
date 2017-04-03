@@ -31,7 +31,7 @@ export class AppComponent implements AfterViewInit {
         localStorage.setItem('auth', auth.uid);
         location.reload();
       }
-    })
+    }, e => this.requestAuth())
   }
 
   requestAuth() {
@@ -45,6 +45,26 @@ export class AppComponent implements AfterViewInit {
     this.af.auth.login({
       provider: AuthProviders.Google,
       method: AuthMethods.Redirect
+    });
+  }
+
+  loginViaTwitter() {
+    this.af.auth.login({
+      provider: AuthProviders.Twitter,
+      method: AuthMethods.Redirect
+    });
+  }
+
+  loginViaGitHub() {
+    this.af.auth.login({
+      provider: AuthProviders.Github,
+      method: AuthMethods.Redirect
+    });
+  }
+
+  logout() {
+    this.af.auth.logout().then(d => {
+      location.reload();
     });
   }
 }
