@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -18,7 +18,8 @@ export class ExaminationComponent implements OnInit {
   private subjectID: string;
   private examinationID: string;
   private problems: Observable<any>;
-  private test: any = [{display: "233"}, {display: "444"}, {display: "555"}];
+  private __problem: Problem;
+  @ViewChild('problemContent') private problemModal: ElementRef;
 
   constructor(private route: ActivatedRoute, private api: ApiService, private db: DBService, private af: AngularFire, private modalService: NgbModal) {
     this.subject = route.params.switchMap((params: Params) => af.database.object(this.api.f(`/subjects/${params['sid']}`)));
@@ -28,17 +29,41 @@ export class ExaminationComponent implements OnInit {
 
   ngOnInit() {
     this.subject.subscribe(s => {
-      this.examination.subscribe(e => {
-        this.api.NavbarTitle$.next(`Goalize>${s.name}>${e.name}`);
-        this.examinationID = e.$key;
-      });
       this.api.NavbarColor$.next(s.color);
       this.subjectID = s.$key;
     });
+    this.examination.subscribe(e => {
+      this.subject.first().subscribe(s => {
+        this.api.NavbarTitle$.next(`Goalize>${s.name}>${e.name}`);
+        this.examinationID = e.$key;
+      })
+    });
+    this.__problem = this.createProblem();
   }
-  
+
+  createProblem() {
+    let _p = new Problem;
+    _p.group = 1;
+    return _p;
+  }
+
   addProblem(problem) {
     this.af.database.list(this.api.f(`/problems/${this.examinationID}`)).push(problem);
     this.db.postChangeProblem(this.subject, this.examination);
+  }
+
+  open(content) {
+    this.modalService.open(content).result.then((result) => {
+      if (result == 'ok' || result == 'next') {
+        this.__problem.timeCreated = Date.now();
+        this.__problem.timeUpdated = Date.now();
+        this.addProblem(this.__problem);
+        this.__problem = this.createProblem();
+        if (result == 'next') {
+          this.open(this.problemModal);
+        }
+      }
+    }, (reason) => {
+    });
   }
 }

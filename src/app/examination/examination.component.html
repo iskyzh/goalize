@@ -57,9 +57,47 @@
           <h4>错因 <span class="badge mx-1" [ngClass]="'goal-subject-' + (subject | async).color" *ngFor="let tag of problem.reason">{{ tag.display }}</span></h4>
         </div>
       </li>
-      <li class="list-group-item goal-problem-card d-flex align-items-center justify-content-center" *ngIf="problems | async">
+      <li class="list-group-item goal-problem-card d-flex align-items-center justify-content-center" (click)="open(problemContent)" *ngIf="problems | async">
         <span class="card-title text-muted"><i class="fa fa-plus fa-3x" aria-hidden="true"></i></span>
       </li>
     </ul>
   </div>
 </div>
+
+<template #problemContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">添加试题</h4>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="c('ok')" #problemForm="ngForm">
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="得分" [(ngModel)]="__problem.score" name="score" required>
+          <span class="input-group-addon">/</span>
+          <input type="text" class="form-control" placeholder="总分" [(ngModel)]="__problem.totalScore" name="totalScore" required>   
+        </div>
+        <div class="goalize-progress-score progress">
+          <div class="progress-bar" [ngClass]="'goal-subject-' + (subject | async).color" role="progressbar" [ngStyle]="{ 'width': (__problem.score / __problem.totalScore * 100) + '%' }"></div>
+        </div>       
+      </div>
+      <div class="form-group">
+        <tag-input class="goalize-input-tag" [(ngModel)]="__problem.type" name="tags" theme="minimal" [placeholder]="'接着添加类型'" [secondaryPlaceholder]="'题目类型'">
+        </tag-input>
+      </div>
+      <div class="form-group">
+        <tag-input class="goalize-input-tag" [(ngModel)]="__problem.reason" name="tags" theme="minimal" [placeholder]="'接着添加错因'" [secondaryPlaceholder]="'错误原因'">
+        </tag-input>
+      </div>
+      <div class="form-group">
+        <tag-input class="goalize-input-tag" [(ngModel)]="__problem.knowledge" name="tags" theme="minimal" [placeholder]="'接着添加知识点'" [secondaryPlaceholder]="'知识点'">
+        </tag-input>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="试题数" [(ngModel)]="__problem.group" name="group" required>   
+      </div>
+      <button class="btn btn-primary text-xs-right" (click)="c('next')"  [disabled]="!problemForm.form.valid">下一题</button>
+      <button class="btn btn-primary text-xs-right" (click)="c('ok')"  [disabled]="!problemForm.form.valid">确定</button>
+      <button class="btn btn-secondary text-xs-right" (click)="c('cancel')">取消</button>
+    </form>
+  </div>
+</template>

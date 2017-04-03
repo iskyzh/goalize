@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { ApiService, DBService } from '../shared';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import { Subject, Examination, MATERIAL_COLORS_DATA, EXAMINATION_COLOR } from '../models';
 
 @Component({
@@ -23,7 +24,7 @@ export class SubjectComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private api: ApiService, private db: DBService, private af: AngularFire, private modalService: NgbModal) {
     this.subject = route.params.switchMap((params: Params) => af.database.object(api.f(`/subjects/${params['id']}`)));
     this.examinations = route.params.switchMap((params: Params) => af.database.list(api.f(`/examinations/${params['id']}`)));
-    this.examinations$ = this.examinations.map(e => _(e).sortBy('date').map((e, i) => _.merge(e, { color: MATERIAL_COLORS_DATA[this.subjectColor][EXAMINATION_COLOR(i)] })).reverse().value());
+    this.examinations$ = this.examinations.map(e => _.chain(e).sortBy('date').map((e, i) => _.merge(e, { color: MATERIAL_COLORS_DATA[this.subjectColor][EXAMINATION_COLOR(i)] })).reverse().value());
   }
 
   ngOnInit() {
@@ -33,12 +34,17 @@ export class SubjectComponent implements OnInit, OnDestroy {
       this.subjectColor = s.color;
       this.subjectID = s.$key;
     });
-    this.__examination = new Examination;
+    this.__examination = this.createExamination();
   }
 
   ngOnDestroy() {
   }
 
+  createExamination() {
+    let _e = new Examination();
+    return _e;
+  }
+  
   addExamination(examination) {
     this.af.database.list(this.api.f(`/examinations/${this.subjectID}`)).push(examination);
     this.db.postChangeExamination(this.subject);
@@ -51,7 +57,7 @@ export class SubjectComponent implements OnInit, OnDestroy {
         this.__examination.timeUpdated = Date.now();
         this.__examination.date = (new Date(this.__examination.date)).getTime();
         this.addExamination(this.__examination);
-        this.__examination = new Examination;
+        this.__examination = this.createExamination();
       }
     }, (reason) => {
     });
