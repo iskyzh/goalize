@@ -3,6 +3,6 @@ export class Examination {
   public timeCreated: number;
   public timeUpdated: number;
   public date: number;
-  public tags: string[];
+  public tags: any[];
   public details: any;
 }

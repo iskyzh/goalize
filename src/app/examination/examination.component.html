@@ -1,4 +1,4 @@
-<div class="container mt-3">
+<div class="container my-3">
   <div class="card">
     <div class="card-block goal-problem-card-header" *ngIf="examination | async">
       <div class="row">
@@ -27,11 +27,11 @@
         <div class="col-5">
           <dl class="row">
             <dt class="col-3">年级名次</dt>
-            <dd class="col-9">233</dd>
+            <dd class="col-9">???</dd>
             <dt class="col-3">班级名次</dt>
-            <dd class="col-9">233</dd>
+            <dd class="col-9">???</dd>
             <dt class="col-3">总分</dt>
-            <dd class="col-9">233 / 400</dd>
+            <dd class="col-9">??? / ???</dd>
           </dl>
         </div>
         <div class="col-2">
@@ -44,17 +44,17 @@
       <li class="list-group-item goal-problem-card d-flex align-items-center justify-content-center" *ngIf="!(problems | async)">
         <span class="card-title text-muted"><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i></span>
       </li>
-      <li class="list-group-item goal-problem-card d-flex" *ngIf="problems | async">
+      <li class="list-group-item goal-problem-card d-flex" *ngFor="let problem of problems | async; let $index = index">
         <div class="col-1 d-flex flex-column justify-content-center">
-          <h1 class="goalize-problem-number display-4 text-center my-0"><samp>12</samp></h1>
+          <h1 class="goalize-problem-number display-4 text-center my-0"><samp>{{ $index + 1 }}</samp></h1>
           <div class="progress">
-            <div class="progress-bar" [ngClass]="'goal-subject-' + (subject | async).color" role="progressbar" style="width: 50%;">1 <small>/ 2</small></div>
+            <div class="progress-bar" [ngClass]="'goal-subject-' + (subject | async).color" role="progressbar" [ngStyle]="{ 'width': (problem.score / problem.totalScore * 100) + '%' }">{{ problem.score }} <small>/ {{ problem.totalScore }}</small></div>
           </div>
         </div>
         <div class="col">
-          <h4>题型 <span class="badge mx-1" [ngClass]="'goal-subject-' + (subject | async).color" *ngFor="let tag of test">{{ tag.display }}</span></h4>
-          <h4>考点 <span class="badge mx-1" [ngClass]="'goal-subject-' + (subject | async).color" *ngFor="let tag of test">{{ tag.display }}</span></h4>
-          <h4>错因 <span class="badge mx-1" [ngClass]="'goal-subject-' + (subject | async).color" *ngFor="let tag of test">{{ tag.display }}</span></h4>
+          <h4>题型 <span class="badge mx-1" [ngClass]="'goal-subject-' + (subject | async).color" *ngFor="let tag of problem.type">{{ tag.display }}</span></h4>
+          <h4>考点 <span class="badge mx-1" [ngClass]="'goal-subject-' + (subject | async).color" *ngFor="let tag of problem.knowledge">{{ tag.display }}</span></h4>
+          <h4>错因 <span class="badge mx-1" [ngClass]="'goal-subject-' + (subject | async).color" *ngFor="let tag of problem.reason">{{ tag.display }}</span></h4>
         </div>
       </li>
       <li class="list-group-item goal-problem-card d-flex align-items-center justify-content-center" *ngIf="problems | async">
