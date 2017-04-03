@@ -18,13 +18,24 @@ export class ExaminationComponent implements OnInit {
   private subjectID: string;
   private examinationID: string;
   private problems: Observable<any>;
+  private problems$: Observable<any>;
   private __problem: Problem;
+  
   @ViewChild('problemContent') private problemModal: ElementRef;
 
   constructor(private route: ActivatedRoute, private api: ApiService, private db: DBService, private af: AngularFire, private modalService: NgbModal) {
     this.subject = route.params.switchMap((params: Params) => af.database.object(this.api.f(`/subjects/${params['sid']}`)));
     this.examination = route.params.switchMap((params: Params) => af.database.object(this.api.f(`/examinations/${params['sid']}/${params['eid']}`)));
     this.problems = route.params.switchMap((params: Params) => af.database.list(this.api.f(`/problems/${params['eid']}`)));
+    this.problems$ = this.problems.map(d => {
+      let _d = [];
+      let index: number = 0;
+      _.forEach(d, (v: Problem) => {
+        index = index + v.group;
+        _d.push(_.merge(v, { index }))
+      });
+      return _d;
+    });
   }
 
   ngOnInit() {
