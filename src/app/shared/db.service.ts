@@ -22,7 +22,6 @@ export class DBService {
       examination.first().subscribe(e => {
         e.timeUpdated = Date.now();
         this.af.database.object(this.api.f(`/examinations/${s.$key}/${e.$key}`)).update(e);
-        console.log("UPD2ATED!")
       });
     });
   }

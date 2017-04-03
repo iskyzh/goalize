@@ -17,6 +17,7 @@ export class AppComponent implements AfterViewInit {
   private current_color: string = "grey";
   private current_title: string[] = ["Loading..."];
   private connected$: FirebaseObjectObservable<any>;
+  private __version: string = process.env.VERSION;
 
   constructor(private api: ApiService, private modalService: NgbModal, private af: AngularFire) {
     api.NavbarColor$.subscribe(color => this.current_color = color);
