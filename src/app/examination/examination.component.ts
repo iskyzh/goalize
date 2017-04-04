@@ -20,7 +20,8 @@ export class ExaminationComponent implements OnInit {
   private problems: Observable<any>;
   private problems$: Observable<any>;
   private __problem: Problem;
-  
+  private tags$: any;
+
   @ViewChild('problemContent') private problemModal: ElementRef;
 
   constructor(private route: ActivatedRoute, private api: ApiService, private db: DBService, private af: AngularFire, private modalService: NgbModal) {
@@ -38,10 +39,21 @@ export class ExaminationComponent implements OnInit {
     });
   }
 
+  public atType: Array<any>;
+  public atReason: Array<any>;
+  public atKnowledge: Array<any>;
+
   ngOnInit() {
     this.subject.subscribe(s => {
       this.api.NavbarColor$.next(s.color);
       this.subjectID = s.$key;
+      this.tags$ = this.db.getTags(this.subjectID);
+      this.tags$.subscribe(tags => {
+        this.atType = tags.type || [];
+        this.atReason = tags.reason || [];
+        this.atKnowledge = tags.knowledge || [];
+        console.log(this.atKnowledge);
+      });
     });
     this.examination.subscribe(e => {
       this.subject.first().subscribe(s => {
@@ -60,7 +72,7 @@ export class ExaminationComponent implements OnInit {
 
   addProblem(problem) {
     this.af.database.list(this.api.f(`/problems/${this.examinationID}`)).push(problem);
-    this.db.postChangeProblem(this.subject, this.examination);
+    this.db.postChangeProblem(this.subject, this.examination, problem);
   }
 
   open(content) {

@@ -24,6 +24,10 @@ body {
   }
 }
 
+.ng2-dropdown-menu {
+  z-index: 2000 !important;
+}
+
 .goalize-input-datepicker {
   .form-control {
     flex-direction: row;

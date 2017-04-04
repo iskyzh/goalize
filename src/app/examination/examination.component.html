@@ -31,7 +31,7 @@
             <dt class="col-3">班级名次</dt>
             <dd class="col-9">???</dd>
             <dt class="col-3">总分</dt>
-            <dd class="col-9">??? / ???</dd>
+            <dd class="col-9">{{ (examination | async).detail?.score }} / {{ (examination | async).detail?.totalScore }}</dd>
           </dl>
         </div>
         <div class="col-2">
@@ -81,15 +81,19 @@
         </div>       
       </div>
       <div class="form-group">
-        <tag-input class="goalize-input-tag" [(ngModel)]="__problem.type" name="tags" theme="minimal" [placeholder]="'接着添加类型'" [secondaryPlaceholder]="'题目类型'">
+        <tag-input class="goalize-input-tag" [(ngModel)]="__problem.type" name="type" theme="minimal" [placeholder]="'接着添加类型'" [secondaryPlaceholder]="'题目类型'" >
+          <tag-input-dropdown [autocompleteItems]="atType" [showDropdownIfEmpty]="true"></tag-input-dropdown>
         </tag-input>
       </div>
       <div class="form-group">
-        <tag-input class="goalize-input-tag" [(ngModel)]="__problem.reason" name="tags" theme="minimal" [placeholder]="'接着添加错因'" [secondaryPlaceholder]="'错误原因'">
+        <tag-input class="goalize-input-tag" [(ngModel)]="__problem.reason" name="reason" theme="minimal" [placeholder]="'接着添加错因'" [secondaryPlaceholder]="'错误原因'">
+          <tag-input-dropdown [autocompleteItems]="atReason" [showDropdownIfEmpty]="true"></tag-input-dropdown>
         </tag-input>
       </div>
       <div class="form-group">
-        <tag-input class="goalize-input-tag" [(ngModel)]="__problem.knowledge" name="tags" theme="minimal" [placeholder]="'接着添加知识点'" [secondaryPlaceholder]="'知识点'">
+        <tag-input class="goalize-input-tag" [(ngModel)]="__problem.knowledge" name="knowledge" theme="minimal" [placeholder]="'接着添加知识点'" [secondaryPlaceholder]="'知识点'">
+          <tag-input-dropdown [autocompleteItems]="atKnowledge" [showDropdownIfEmpty]="true">
+          </tag-input-dropdown>
         </tag-input>
       </div>
       <div class="form-group">
