@@ -2,6 +2,10 @@
 
 Help analyze your examinations.
 
+## Progress
+
+You can now add subjects, examinations and problems. Editing data, rank and analytics are not supported.
+
 ## License
 
 MIT
